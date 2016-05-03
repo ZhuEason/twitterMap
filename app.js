@@ -22,6 +22,7 @@ app.get('/',  function(req, res) {
 });
 
 app.post('/', function(req, res) {
+    console.log("receive the message");
     if (req.header.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.header.x-amz-sns-message-type;
         if (req.body.SignatureVersion == '1') {
