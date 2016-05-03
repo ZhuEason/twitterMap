@@ -26,7 +26,9 @@ app.post('/', function(req, res) {
     //res.send("message receive");
     console.log(req.body);
     console.log("!!!!!!!!!!!!");
-    if (req.hasOwnProperty("x-amz-sns-message-type")) {
+    console.log("req.headers");
+    
+    if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
         console.log("dddddddddssssssss");
         type = req.x-amz-sns-message-type;
         if (req.body.SignatureVersion == '1') {
