@@ -21,6 +21,30 @@ app.get('/',  function(req, res) {
     res.sendfile('./html/helloWorld.html');
 });
 
+app.post('/', function(req, res) {
+    if (req.header.hasOwnProperty("x-amz-sns-message-type")) {
+        type = req.header.x-amz-sns-message-type;
+        if (req.body.SignatureVersion == '1') {
+            console.log("success");
+        } else {
+            console.log("error");
+            res.end();
+        }
+
+        if (type == "Notification") {
+            console.log("Notification:" + req.body.Message);
+        } else if (type == "SubscriptionConfirmation") {
+            Token = req.body.Token;
+            SubscribeURL = req.body.SubscribeURL;
+            TopicArn = req.body.TopicArn;
+            console.log("SubscriptionConfirmation's token: " + req.body.Token);
+        } else if (type == "UnsubscribeConfirmation") {
+            console.log("unSubscription");
+        }
+    }
+});
+
+
 app.get('/data', function(req, res) {
     res.send("get method of data : " + req.query.username);
 });
