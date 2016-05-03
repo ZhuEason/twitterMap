@@ -17,6 +17,7 @@ app.use(express.static(__dirname));
 
 app.get('/',  function(req, res) {
     //res.setHeader('Content-Type', 'text/html');
+    console.log("FIRST INIT PROGRAM");
     res.sendfile('./html/helloWorld.html');
 });
 
@@ -46,10 +47,7 @@ app.post('/', function(req, res) {
             console.log("unSubscription");
         }
     }
-
 });
-
-
 
 app.get('/data', function(req, res) {
     res.send("get method of data : " + req.query.username);
@@ -73,7 +71,6 @@ app.post('/data', function(req, res) {
         res.send(response);
     });
 });
-
 
 var server = app.listen(8081, function() {
     var host = server.address().address;
