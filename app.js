@@ -20,8 +20,10 @@ app.get('/',  function(req, res) {
     res.sendfile('./html/helloWorld.html');
 });
 
+
 app.post('/', function(req, res) {
-    res.send("message receive");
+    //res.send("message receive");
+    console.log(req.body);
     if (req.header.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.header.x-amz-sns-message-type;
         if (req.body.SignatureVersion == '1') {
@@ -37,6 +39,8 @@ app.post('/', function(req, res) {
             Token = req.body.Token;
             SubscribeURL = req.body.SubscribeURL;
             TopicArn = req.body.TopicArn;
+            //sns.confirmSubscription()
+
             console.log("SubscriptionConfirmation's token: " + req.body.Token);
         } else if (type == "UnsubscribeConfirmation") {
             console.log("unSubscription");
@@ -44,6 +48,7 @@ app.post('/', function(req, res) {
     }
 
 });
+
 
 
 app.get('/data', function(req, res) {
