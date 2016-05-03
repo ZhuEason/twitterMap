@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../JS/helloWorld.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/helloWorld.css">
+</head>
+
+<body>
+<div id="floating-panel-removePath">
+    <input onclick="removeLine();" type=button value="Remove line">
+    <input onclick="addLine();" type=button value="Restore line">
+</div>
+
+<div id="floating-panel">
+    <input onclick="clearMarkers();" type=button value="Hide Markers">
+    <input onclick="showMarkers();" type=button value="Show All Markers">
+    <input onclick="deleteMarkers();" type=button value="Delete Markers">
+</div>
+
+<div id="map"></div>
+
+<div id="search_bar">
+
+
+    <select id="keywords">
+        <option value="Trump">Trump</option>
+        <option value="Clinton">Clinton</option>
+        <option value="Obama">Obama</option>
+        <option value="Cameron">Cameron</option>
+        <option value="Messi">Messi</option>
+        <option value="Cristiano">Cristiano</option>
+        <option value="Curry">Curry</option>
+        <option value="James">James</option>
+        <option value="Kobe">Kobe</option>
+    </select>
+</div>
+
+<div id="data">position</div>
+<button>Mark it</button>
+</body>
+
+</html>
