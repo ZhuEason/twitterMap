@@ -25,6 +25,7 @@ app.get('/',  function(req, res) {
 app.post('/', function(req, res) {
     //res.send("message receive");
     console.log(req.body);
+    console.log("!!!!!!!!!!!!");
     if (req.header.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.header.x-amz-sns-message-type;
         if (req.body.SignatureVersion == '1') {
@@ -47,6 +48,7 @@ app.post('/', function(req, res) {
             console.log("unSubscription");
         }
     }
+    res.send("sssssss!");
 });
 
 app.get('/data', function(req, res) {
