@@ -16,13 +16,12 @@ var client = new elasticsearch.Client({
 app.use(express.static(__dirname));
 
 app.get('/',  function(req, res) {
-    console.log("Got a GET request for the homepage");
     //res.setHeader('Content-Type', 'text/html');
     res.sendfile('./html/helloWorld.html');
 });
 
 app.post('/', function(req, res) {
-    res.sendfile('./imag/smiley-laugh.png')
+    res.send("message receive");
     if (req.header.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.header.x-amz-sns-message-type;
         if (req.body.SignatureVersion == '1') {
