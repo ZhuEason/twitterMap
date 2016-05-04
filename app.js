@@ -25,6 +25,7 @@ app.use(function(req, res, next) {
     var d= '';
     req.setEncoding('utf8');
     req.on('d', function(chunk) {
+        console.log("?????????????");
         d+= chunk;
     });
     req.on('end', function() {
