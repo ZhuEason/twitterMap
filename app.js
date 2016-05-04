@@ -21,16 +21,30 @@ app.get('/',  function(req, res) {
     res.sendfile('./html/helloWorld.html');
 });
 
+app.use(function(req, res, next) {
+    var d= '';
+    req.setEncoding('utf8');
+    req.on('d', function(chunk) {
+        d+= chunk;
+    });
+    req.on('end', function() {
+        req.rawBody = d;
+        next();
+    });
+});
 
 app.post('/', function(req, res) {
     //res.send("message receive");
-    console.log(req.body);
+
+    //data = JSON.stringify(req.rawBody);
+
+    console.log(JSON.stringify(req.body));
     console.log("!!!!!!!!!!!!");
     console.log(req.headers);
 
     if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.headers['x-amz-sns-message-type'];
-        if (req.body["SignatureVersion"] == '1') {
+        if (req.req["SignatureVersion"] == '1') {
             console.log("success");
         } else {
             console.log("error");
@@ -45,7 +59,7 @@ app.post('/', function(req, res) {
             TopicArn = req.body["TopicArn"];
             //sns.confirmSubscription()
 
-            console.log("SubscriptionConfirmation's token: " + req.body.TopicArn);
+            console.log("SubscriptionConfirmation's token: " + req.body["TopicArn"]);
         } else if (type == "UnsubscribeConfirmation") {
             console.log("unSubscription");
         }
