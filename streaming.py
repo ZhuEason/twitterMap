@@ -21,6 +21,6 @@ for item in r:
         #es.index(index='twitter', doc_type='people', id=i, body=item)
         #print json.dumps(item, indent = 4)
         queue.send_message(MessageBody=json.dumps(item))
-        print item['geo'], item['lang']
+        print json.dumps(item)
         i += 1
     #print(item)
