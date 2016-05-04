@@ -50,12 +50,13 @@ app.post('/', function(req, res) {
             res.end();
         }
 
+        obj = JSON.parse(req.rawBody);
         if (type == "Notification") {
             console.log("Notification:" + req.rawBody["Message"]);
         } else if (type == "SubscriptionConfirmation") {
-            Token = req.rawBody["Token"];
-            SubscribeURL = req.rawBody["SubscribeURL"];
-            TopicArn = req.rawBody["TopicArn"];
+            Token = obj["Token"];
+            SubscribeURL = obj["SubscribeURL"];
+            TopicArn = obj["TopicArn"];
             //sns.confirmSubscription()
             console.log(Token, SubscribeURL, TopicArn);
             //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
