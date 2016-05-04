@@ -24,7 +24,7 @@ app.get('/',  function(req, res) {
 app.use(function(req, res, next) {
     var d= '';
     req.setEncoding('utf8');
-    req.on('d', function(chunk) {
+    req.on('data', function(chunk) {
         console.log("?????????????");
         d+= chunk;
     });
