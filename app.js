@@ -4,7 +4,6 @@ var elasticsearch = require('elasticsearch');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 
-sns = new AWS.SNS();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -48,16 +47,10 @@ app.post('/', function(req, res) {
             if (type == "Notification") {
                 console.log("Notification:" + obj["Message"]);
             } else if (type == "SubscriptionConfirmation") {
-                var params = {
-                    Token : obj["Token"],
-                    TopicArn : obj["TopicArn"],
-                    SubscribeURL : obj["SubscribeURL"]
-                };
 
-                sns.confirmSubscription(params, function(err, data) {
-                    if (err) console.log(err, err.stack);
-                    else console.log(data);
-                });
+                Token = obj["Token"];
+                TopicArn = obj["TopicArn"];
+                SubscribeURL = obj["SubscribeURL"];
             //sns.confirmSubscription()
 
                 console.log(Token, SubscribeURL, TopicArn);
