@@ -41,13 +41,20 @@ app.post('/', function(req, res) {
     console.log(req.headers);
 
     obj = JSON.parse(req.rawBody);
-    content = JSON.parse(obj["Message"]);
+    cont = JSON.parse(obj["Message"]);
     if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.headers['x-amz-sns-message-type'];
         if (obj["SignatureVersion"] == "1") {
             if (type == "Notification") {
                 console.log("Notification:" + obj["Message"]);
-                console.log("sentiment:" + content["sentiment"])
+                console.log("sentiment:" + cont["sentiment"])
+                client.index({
+                    index: 'twitter',
+                    type: 'people with sentiment',
+                    body: {
+                        content: cont
+                    }
+                })
             } else if (type == "SubscriptionConfirmation") {
 
                 Token = obj["Token"];
