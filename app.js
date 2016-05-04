@@ -45,7 +45,7 @@ app.post('/', function(req, res) {
             TopicArn = req.body.TopicArn;
             //sns.confirmSubscription()
 
-            console.log("SubscriptionConfirmation's token: " + json.stringify(req.body));
+            console.log("SubscriptionConfirmation's token: " + req.body.SubscribeURL);
         } else if (type == "UnsubscribeConfirmation") {
             console.log("unSubscription");
         }
