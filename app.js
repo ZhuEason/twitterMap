@@ -41,27 +41,24 @@ app.post('/', function(req, res) {
     console.log(req.rawBody);
     console.log(req.headers);
 
+    obj = JSON.parse(req.rawBody);
     if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.headers['x-amz-sns-message-type'];
-        if (req.rawBody["SignatureVersion"] == "1") {
-            console.log("success");
+        if (obj["SignatureVersion"] == "1") {
+            if (type == "Notification") {
+                console.log("Notification:" + obj["Message"]);
+            } else if (type == "SubscriptionConfirmation") {
+                Token = obj["Token"];
+                SubscribeURL = obj["SubscribeURL"];
+                TopicArn = obj["TopicArn"];
+            //sns.confirmSubscription()
+                console.log(Token, SubscribeURL, TopicArn);
+            //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
+            } else if (type == "UnsubscribeConfirmation") {
+                console.log("unSubscription");
+            }
         } else {
             console.log("error");
-            res.end();
-        }
-
-        obj = JSON.parse(req.rawBody);
-        if (type == "Notification") {
-            console.log("Notification:" + req.rawBody["Message"]);
-        } else if (type == "SubscriptionConfirmation") {
-            Token = obj["Token"];
-            SubscribeURL = obj["SubscribeURL"];
-            TopicArn = obj["TopicArn"];
-            //sns.confirmSubscription()
-            console.log(Token, SubscribeURL, TopicArn);
-            //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
-        } else if (type == "UnsubscribeConfirmation") {
-            console.log("unSubscription");
         }
     }
 });
