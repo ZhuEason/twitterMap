@@ -39,7 +39,7 @@ app.post('/', function(req, res) {
 
     //data = JSON.stringify(req.rawBody);
 
-    console.log(JSON.stringify(req.rawBody));
+    console.log(req.rawBody);
     console.log("!!!!!!!!!!!!");
     console.log(req.headers);
 
