@@ -1,38 +1,43 @@
 var express = require('express');
 var app = express();
-var elasticsearch = require('elasticsearch');
+var elasticsearch = require('aws-es');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
-var client = new elasticsearch.Client({
-    host: 'localhost:9200',
-    log: 'info'
+
+client = new elasticsearch({
+    accessKeyId: 'AKIAJVLLMWN4755TFB4',
+    secretAccessKey: 'S+/vPOAqGN5PaRipUbnOOx41OSQT0ILMifMap3P',
+    service: 'es',
+    region: 'us-east-1b',
+    host: 'search-twitter-cwjb6pdkcaph5nnbu3rw2c4xve.us-east-1.es.amazonaws.com'
 });
+
 
 app.use(express.static(__dirname));
 
-app.get('/',  function(req, res) {
+app.get('/', function (req, res) {
     //res.setHeader('Content-Type', 'text/html');
     console.log("FIRST INIT PROGRAM");
     res.sendfile('./html/helloWorld.html');
 });
 
-app.use(function(req, res, next) {
-    var d= '';
+app.use(function (req, res, next) {
+    var d = '';
     req.setEncoding('utf8');
-    req.on('data', function(chunk) {
-        d+= chunk;
+    req.on('data', function (chunk) {
+        d += chunk;
     });
-    req.on('end', function() {
+    req.on('end', function () {
         req.rawBody = d;
         next();
     });
 });
 
-app.post('/', function(req, res) {
+app.post('/', function (req, res) {
     //res.send("message receive");
 
     //data = JSON.stringify(req.rawBody);
@@ -60,10 +65,10 @@ app.post('/', function(req, res) {
                 Token = obj["Token"];
                 TopicArn = obj["TopicArn"];
                 SubscribeURL = obj["SubscribeURL"];
-            //sns.confirmSubscription()
+                //sns.confirmSubscription()
 
                 console.log(Token, SubscribeURL, TopicArn);
-            //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
+                //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
             } else if (type == "UnsubscribeConfirmation") {
                 console.log("unSubscription");
             }
@@ -73,11 +78,11 @@ app.post('/', function(req, res) {
     }
 });
 
-app.get('/data', function(req, res) {
+app.get('/data', function (req, res) {
     res.send("get method of data : " + req.query.username);
 });
 
-app.post('/data', function(req, res) {
+app.post('/data', function (req, res) {
     console.log("post metheo got!");
     console.log(req.body);
     client.search({
@@ -90,13 +95,13 @@ app.post('/data', function(req, res) {
                 }
             }
         }
-    }, function(error, response) {
-    //console.log(response.hits.hits[0]._source.coordinates);
+    }, function (error, response) {
+        //console.log(response.hits.hits[0]._source.coordinates);
         res.send(response);
     });
 });
 
-var server = app.listen(8081, function() {
+var server = app.listen(8081, function () {
     var host = server.address().address;
     var port = server.address().port;
 
