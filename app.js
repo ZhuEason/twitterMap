@@ -25,7 +25,6 @@ app.use(function(req, res, next) {
     var d= '';
     req.setEncoding('utf8');
     req.on('data', function(chunk) {
-        console.log("?????????????");
         d+= chunk;
     });
     req.on('end', function() {
@@ -39,8 +38,7 @@ app.post('/', function(req, res) {
 
     //data = JSON.stringify(req.rawBody);
 
-    console.log(req.rawBody);
-    console.log("!!!!!!!!!!!!");
+    console.log(req.rawBody.Message);
     console.log(req.headers);
 
     if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
@@ -53,11 +51,11 @@ app.post('/', function(req, res) {
         }
 
         if (type == "Notification") {
-            console.log("Notification:" + req.body.Message);
+            console.log("Notification:" + req.rawBody.Message);
         } else if (type == "SubscriptionConfirmation") {
-            Token = req.body["Token"];
-            SubscribeURL = req.body["SubscribeURL"];
-            TopicArn = req.body["TopicArn"];
+            Token = req.rawBody["Token"];
+            SubscribeURL = req.rawBody["SubscribeURL"];
+            TopicArn = req.rawBody["TopicArn"];
             //sns.confirmSubscription()
 
             console.log("SubscriptionConfirmation's token: " + req.rawBody["TopicArn"]);
