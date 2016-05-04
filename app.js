@@ -37,13 +37,13 @@ app.post('/', function(req, res) {
     //res.send("message receive");
 
     //data = JSON.stringify(req.rawBody);
-    console.log("???????????????????????");
+    console.log("???????????????????????" + now());
     console.log(req.rawBody);
     console.log(req.headers);
 
     if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.headers['x-amz-sns-message-type'];
-        if (req.rawBody["SignatureVersion"] == '1') {
+        if (req.rawBody["SignatureVersion"] == "1") {
             console.log("success");
         } else {
             console.log("error");
@@ -57,13 +57,12 @@ app.post('/', function(req, res) {
             SubscribeURL = req.rawBody["SubscribeURL"];
             TopicArn = req.rawBody["TopicArn"];
             //sns.confirmSubscription()
-
-            console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
+            console.log(Token, SubscribeURL, TopicArn);
+            //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
         } else if (type == "UnsubscribeConfirmation") {
             console.log("unSubscription");
         }
     }
-    res.send("sssssss!");
 });
 
 app.get('/data', function(req, res) {
