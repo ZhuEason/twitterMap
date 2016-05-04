@@ -41,12 +41,13 @@ app.post('/', function(req, res) {
     console.log(req.headers);
 
     obj = JSON.parse(req.rawBody);
+    content = JSON.parse(obj["Message"]);
     if (req.headers.hasOwnProperty("x-amz-sns-message-type")) {
         type = req.headers['x-amz-sns-message-type'];
         if (obj["SignatureVersion"] == "1") {
             if (type == "Notification") {
                 console.log("Notification:" + obj["Message"]);
-                console.log("sentiment:" + obj["Message"]["text"])
+                console.log("sentiment:" + content["text"])
             } else if (type == "SubscriptionConfirmation") {
 
                 Token = obj["Token"];
