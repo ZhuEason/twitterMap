@@ -40,12 +40,12 @@ app.post('/', function(req, res) {
         if (type == "Notification") {
             console.log("Notification:" + req.body.Message);
         } else if (type == "SubscriptionConfirmation") {
-            Token = req.body.Token;
-            SubscribeURL = req.body.SubscribeURL;
-            TopicArn = req.body.TopicArn;
+            Token = req.body["Token"];
+            SubscribeURL = req.body["SubscribeURL"];
+            TopicArn = req.body["TopicArn"];
             //sns.confirmSubscription()
 
-            console.log("SubscriptionConfirmation's token: " + req.body.SubscribeURL);
+            console.log("SubscriptionConfirmation's token: " + req.body["Token"]);
         } else if (type == "UnsubscribeConfirmation") {
             console.log("unSubscription");
         }
