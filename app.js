@@ -46,6 +46,7 @@ app.post('/', function(req, res) {
         if (obj["SignatureVersion"] == "1") {
             if (type == "Notification") {
                 console.log("Notification:" + obj["Message"]);
+                console.log("sentiment:" + obj["Message"]["sentiment"])
             } else if (type == "SubscriptionConfirmation") {
 
                 Token = obj["Token"];
