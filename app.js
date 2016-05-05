@@ -41,7 +41,7 @@ app.post('/data', function(req, res) {
     console.log(req.body);
     client.search({
         index: 'twitter',
-        type: 'people',
+        type: 'people_with_sentiment',
         body: {
             query: {
                 match_phrase: {
@@ -94,7 +94,11 @@ app.post('/', function (req, res) {
                         text: obj["Message"]
                     }
                 }, function (err, data) {
-                    console.log('json reply received' + data);
+                    if (err) {
+                        console.log('error' + err);
+                    } else {
+                        console.log('json reply received' + data);
+                    }
                 });
             } else if (type == "SubscriptionConfirmation") {
                 Token = obj["Token"];
