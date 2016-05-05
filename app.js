@@ -1,18 +1,19 @@
 var express = require('express');
 var app = express();
-//var elasticsearch = require('aws-es');
-var elasticsearch = require('elasticsearch');
+var elasticsearch = require('aws-es');
+//var elasticsearch = require('elasticsearch');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*
 var client = new elasticsearch.Client({
     host: 'localhost:9200',
     log:'info'
 });
+*/
 
-/*
 client = new elasticsearch({
     accessKeyId: 'AKIAJVLLMWN4755TFB4',
     secretAccessKey: 'S+/vPOAqGN5PaRipUbnOOx41OSQT0ILMifMap3P',
@@ -20,7 +21,7 @@ client = new elasticsearch({
     region: 'us-east-1b',
     host: 'search-twitter-cwjb6pdkcaph5nnbu3rw2c4xve.us-east-1.es.amazonaws.com'
 });
-*/
+
 
 app.use(express.static(__dirname));
 
