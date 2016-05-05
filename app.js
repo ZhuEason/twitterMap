@@ -91,7 +91,7 @@ app.post('/', function (req, res) {
                     index: 'twitter',
                     type: 'people_with_sentiment',
                     body: {
-                        content: obj["Message"]
+                        text: obj["Message"]
                     }
                 }, function (err, data) {
                     console.log('json reply received' + data);
