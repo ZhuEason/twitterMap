@@ -6,14 +6,21 @@ var chicago = {lat: 41.85, lng: -87.65};
 var markers = [];
 
 var negative = {
-    url: "../imag/aIW9z2-1.jpg", // url
+    url: "../imag/negative.jpg", // url
     scaledSize: new google.maps.Size(25, 25), // scaled size
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(0, 0) // anchor
 };
 
 var positive = {
-    url: "../imag/smiley-laugh.png", // url
+    url: "../imag/positive.png", // url
+    scaledSize: new google.maps.Size(25, 25), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+};
+
+var neutral = {
+    url: '../imag/neutral.jpg',
     scaledSize: new google.maps.Size(25, 25), // scaled size
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(0, 0) // anchor
@@ -119,7 +126,16 @@ function initMap() {
                 point = new google.maps.LatLng(
                     obj.geo.coordinates[0],
                     obj.geo.coordinates[1]);
-                addFeature(point,positive,map);
+                sentiment = obj.sentiment;
+
+                if (sentiment == "positive") {
+                    addFeature(point,positive,map);
+                } else if (sentiment == "negative") {
+                    addFeature(point,negative,map);
+                } else {
+                    addFeature(point,neutral,map);
+                }
+
             }
             //console.log(hits.hits[0]._source.geo.coordinates);
         })
