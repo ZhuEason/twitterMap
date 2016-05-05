@@ -51,6 +51,7 @@ app.post('/data', function(req, res) {
         }
     }, function(error, response) {
     //console.log(response.hits.hits[0]._source.coordinates);
+        console.log("the response is " + response);
         res.send(response);
     });
 });
@@ -91,7 +92,7 @@ app.post('/', function (req, res) {
                     index: 'twitter',
                     type: 'people_with_sentiment',
                     body: {
-                        text: obj["Message"]
+                        text: JSON.stringify(obj["Message"])
                     }
                 }, function (err, data) {
                     if (err) {

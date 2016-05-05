@@ -124,9 +124,7 @@ function initMap() {
             //console.log(hits.hits[0]._source.geo.coordinates);
         })
     });
-
     //callback();
-
 }
 
 function addMarker(location, map) {
