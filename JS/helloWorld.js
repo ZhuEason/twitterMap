@@ -114,7 +114,7 @@ function initMap() {
     $("button").click(function () {
         deleteMarkers();
         var word = $('#keywords').val();
-        $.post("http://localhost:8081/data", {keyword:word}, function (responseTxt, statusTxt, xhr) {
+        $.post("/data", {keyword:word}, function (responseTxt, statusTxt, xhr) {
             for (i = 0; i < responseTxt.hits.hits.length; i++) {
                 point = new google.maps.LatLng(
                     responseTxt.hits.hits[i]._source.geo.coordinates[0],
