@@ -55,9 +55,9 @@ app.post('/', function (req, res) {
                 console.log("sentiment:" + cont["sentiment"]);
                 client.index({
                     index: 'twitter',
-                    type: 'people with sentiment',
+                    type: 'people_with_sentiment',
                     body: {
-                        content: cont
+                        content: obj['Message']
                     }
                 }, function(err, data) {
                     console.log('json reply received' + data);
