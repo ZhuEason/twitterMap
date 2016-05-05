@@ -117,10 +117,11 @@ function initMap() {
         $.post("/data", {keyword:word}, function (responseTxt, statusTxt, xhr) {
             for (i = 0; i < responseTxt.hits.hits.length; i++) {
                 obj = JSON.parse(responseTxt.hits.hits[i]._source.text);
-                point = new google.maps.LatLng(
-                    obj.geo.coordinates[0],
-                    obj.geo.coordinates[1]);
-                addFeature(point,positive,map);
+                console.log(obj);
+                /*point = new google.maps.LatLng(
+                    responseTxt.hits.hits[i]._source.geo.coordinates[0],
+                    responseTxt.hits.hits[i]._source.geo.coordinates[1]);
+                addFeature(point,positive,map);*/
             }
             //console.log(hits.hits[0]._source.geo.coordinates);
         })
