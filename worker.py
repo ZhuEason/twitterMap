@@ -26,11 +26,11 @@ while (True):
             #obj = json.loads(str)
             #print json.dumps(obj, indent=4)
             print json.dumps(json.loads(str), indent=4)
-            #sns.publish(
-            #    TopicArn = arn,
-            #    Subject = "twitter_information",
-            #    Message = str
-            #)
+            sns.publish(
+                TopicArn = arn,
+                Subject = "twitter_information",
+                Message = str
+            )
 
             #print "Sentiment: ", response["docSentiment"]["type"]
 

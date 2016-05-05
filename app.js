@@ -44,6 +44,7 @@ app.post('/data', function(req, res) {
     client.search({
         index: 'twitter',
         type: 'people_with_sentiment',
+        size: 1000,
         body: {
             query: {
                 match_phrase: {
