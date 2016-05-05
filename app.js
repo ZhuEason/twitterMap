@@ -59,7 +59,7 @@ app.post('/', function (req, res) {
                     body: {
                         content: obj['Message']
                     }
-                }, function(err, data) {
+                }, function (err, data) {
                     console.log('json reply received' + data);
                 });
             } else if (type == "SubscriptionConfirmation") {
@@ -77,6 +77,15 @@ app.post('/', function (req, res) {
         } else {
             console.log("error");
         }
+
+
+        client.count(function (error, response, status) {
+            // check for and handle error
+            var count = response.count;
+            console.log(count);
+        });
+
+
     }
 });
 
