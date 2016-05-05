@@ -1,13 +1,18 @@
 var express = require('express');
 var app = express();
-var elasticsearch = require('aws-es');
+//var elasticsearch = require('aws-es');
+var elasticsearch = require('elasticsearch');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(bodyParser.urlencoded({extended: true}));
+var client = new elasticsearch.Client({
+    host: 'localhost:9200',
+    log:'info'
+});
 
-
+/*
 client = new elasticsearch({
     accessKeyId: 'AKIAJVLLMWN4755TFB4',
     secretAccessKey: 'S+/vPOAqGN5PaRipUbnOOx41OSQT0ILMifMap3P',
@@ -15,7 +20,7 @@ client = new elasticsearch({
     region: 'us-east-1b',
     host: 'search-twitter-cwjb6pdkcaph5nnbu3rw2c4xve.us-east-1.es.amazonaws.com'
 });
-
+*/
 
 app.use(express.static(__dirname));
 
@@ -25,9 +30,11 @@ app.get('/', function (req, res) {
     res.sendfile('./html/helloWorld.html');
 });
 
+
 app.use(function (req, res, next) {
     var d = '';
     req.setEncoding('utf8');
+
     req.on('data', function (chunk) {
         d += chunk;
     });
@@ -35,11 +42,14 @@ app.use(function (req, res, next) {
         req.rawBody = d;
         next();
     });
+
+    next();
 });
+
+
 
 app.post('/', function (req, res) {
     //res.send("message receive");
-
     //data = JSON.stringify(req.rawBody);
     console.log("???????????????????????" + new Date());
     console.log(req.rawBody);
@@ -57,18 +67,16 @@ app.post('/', function (req, res) {
                     index: 'twitter',
                     type: 'people_with_sentiment',
                     body: {
-                        content: obj['Message']
+                        content: obj["Message"]
                     }
                 }, function (err, data) {
                     console.log('json reply received' + data);
                 });
             } else if (type == "SubscriptionConfirmation") {
-
                 Token = obj["Token"];
                 TopicArn = obj["TopicArn"];
                 SubscribeURL = obj["SubscribeURL"];
                 //sns.confirmSubscription()
-
                 console.log(Token, SubscribeURL, TopicArn);
                 //console.log("SubscriptionConfirmation's token: " + req.rawBody["Token"]);
             } else if (type == "UnsubscribeConfirmation") {
@@ -77,15 +85,6 @@ app.post('/', function (req, res) {
         } else {
             console.log("error");
         }
-
-
-        client.count(function (error, response, status) {
-            // check for and handle error
-            var count = response.count;
-            console.log(count);
-        });
-
-
     }
 });
 
@@ -93,7 +92,7 @@ app.get('/data', function (req, res) {
     res.send("get method of data : " + req.query.username);
 });
 
-app.post('/data', function (req, res) {
+app.post('/data', function(req, res) {
     console.log("post metheo got!");
     console.log(req.body);
     client.search({
@@ -106,8 +105,8 @@ app.post('/data', function (req, res) {
                 }
             }
         }
-    }, function (error, response) {
-        //console.log(response.hits.hits[0]._source.coordinates);
+    }, function(error, response) {
+    //console.log(response.hits.hits[0]._source.coordinates);
         res.send(response);
     });
 });
