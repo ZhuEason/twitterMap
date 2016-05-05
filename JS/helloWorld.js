@@ -1,6 +1,5 @@
 $(document).ready(initMap);
 
-
 var data;
 var map;
 var chicago = {lat: 41.85, lng: -87.65};
@@ -116,8 +115,8 @@ function initMap() {
         var word = $('#keywords').val();
         $.post("/data", {keyword:word}, function (responseTxt, statusTxt, xhr) {
             for (i = 0; i < responseTxt.hits.hits.length; i++) {
-                obj = JSON.parse(responseTxt.hits.hits[i]._source.text);
-                console.log(obj.text);
+                obj = JSON.parse(JSON.parse(responseTxt.hits.hits[i]._source.text));
+                console.log(obj);
                 /*point = new google.maps.LatLng(
                     responseTxt.hits.hits[i]._source.geo.coordinates[0],
                     responseTxt.hits.hits[i]._source.geo.coordinates[1]);
