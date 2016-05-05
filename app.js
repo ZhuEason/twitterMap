@@ -15,12 +15,12 @@ var client = new elasticsearch.Client({
 */
 
 var client = require('elasticsearch').Client({
-    hosts: 'search-twitter-cwjb6pdkcaph5nnbu3rw2c4xve.us-east-1.es.amazonaws.com',
+    hosts: 'search-tw*****************st-1.es.amazonaws.com',
     connectionClass: require('http-aws-es'),
     amazonES: {
         region: 'us-east-1',
-        accessKey: 'AKIAJVLLMWN4755TFB4A',
-        secretKey: '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'
+        accessKey: 'A****************A',
+        secretKey: 'A****************A'
     }
 });
 

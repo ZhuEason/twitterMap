@@ -2,7 +2,7 @@ from TwitterAPI import TwitterAPI
 import json
 import boto3
 
-api = TwitterAPI("q2ztTAnPjeDPL9had8Hsyl4SN", "e7iacKmaVC3fusboRUUz8cRY3cLE5mHSckqfbR7ChmkMu2Lb6W", "713496994933776385-EteE0cVnUMgqgX1lnNgmEll1nrXg9Be", "vXh41yILsmCpYqhHN02evFerGnsNkJuVRbOfcpAmosB6k")
+api = TwitterAPI("q2ztA****************Al4SN", "e7iacKmA****************AChmkMu2Lb6W", "713496A****************AcVnUMgqgX1lnNgmEll1nrXg9Be", "vXhA****************ApYqhHN02evFerGnsNkJuVRbOfcpAmosB6k")
 
 r = api.request('statuses/filter', {'track': ['Kobe', 'James', 'Messi', 'Cristiano', 'Curry', 'Trump', 'Clinton', 'Obama', 'Cameron']})
 
