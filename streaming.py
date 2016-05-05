@@ -1,9 +1,6 @@
 from TwitterAPI import TwitterAPI
-from elasticsearch import Elasticsearch
 import json
 import boto3
-
-#es = Elasticsearch([{'host':'localhost', 'port':9200}])
 
 api = TwitterAPI("q2ztTAnPjeDPL9had8Hsyl4SN", "e7iacKmaVC3fusboRUUz8cRY3cLE5mHSckqfbR7ChmkMu2Lb6W", "713496994933776385-EteE0cVnUMgqgX1lnNgmEll1nrXg9Be", "vXh41yILsmCpYqhHN02evFerGnsNkJuVRbOfcpAmosB6k")
 
@@ -23,4 +20,4 @@ for item in r:
         queue.send_message(MessageBody=json.dumps(item))
         print json.dumps(item)
         i += 1
-    #print(item)
+
