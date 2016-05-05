@@ -1,19 +1,19 @@
 var express = require('express');
 var app = express();
-var elasticsearch = require('aws-es');
-//var elasticsearch = require('elasticsearch');
+//var elasticsearch = require('aws-es');
+var elasticsearch = require('elasticsearch');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/*
+
 var client = new elasticsearch.Client({
     host: 'localhost:9200',
     log:'info'
 });
-*/
 
+/*
 client = new elasticsearch({
     accessKeyId: 'AKIAJVLLMWN4755TFB4',
     secretAccessKey: 'S+/vPOAqGN5PaRipUbnOOx41OSQT0ILMifMap3P',
@@ -21,7 +21,7 @@ client = new elasticsearch({
     region: 'us-east-1b',
     host: 'search-twitter-cwjb6pdkcaph5nnbu3rw2c4xve.us-east-1.es.amazonaws.com'
 });
-
+*/
 
 app.use(express.static(__dirname));
 
@@ -30,6 +30,31 @@ app.get('/', function (req, res) {
     console.log("FIRST INIT PROGRAM");
     res.sendfile('./html/helloWorld.html');
 });
+
+
+app.get('/data', function (req, res) {
+    res.send("get method of data : " + req.query.username);
+});
+
+app.post('/data', function(req, res) {
+    console.log("post metheo got!");
+    console.log(req.body);
+    client.search({
+        index: 'twitter',
+        type: 'people',
+        body: {
+            query: {
+                match_phrase: {
+                    text: req.body.keyword
+                }
+            }
+        }
+    }, function(error, response) {
+    //console.log(response.hits.hits[0]._source.coordinates);
+        res.send(response);
+    });
+});
+
 
 
 app.use(function (req, res, next) {
@@ -43,7 +68,6 @@ app.use(function (req, res, next) {
         req.rawBody = d;
         next();
     });
-    next();
 });
 
 
@@ -88,28 +112,7 @@ app.post('/', function (req, res) {
     }
 });
 
-app.get('/data', function (req, res) {
-    res.send("get method of data : " + req.query.username);
-});
 
-app.post('/data', function(req, res) {
-    console.log("post metheo got!");
-    console.log(req.body);
-    client.search({
-        index: 'twitter',
-        type: 'people',
-        body: {
-            query: {
-                match_phrase: {
-                    text: req.body.keyword
-                }
-            }
-        }
-    }, function(error, response) {
-    //console.log(response.hits.hits[0]._source.coordinates);
-        res.send(response);
-    });
-});
 
 var server = app.listen(8081, function () {
     var host = server.address().address;
