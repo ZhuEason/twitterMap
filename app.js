@@ -52,14 +52,16 @@ app.post('/', function (req, res) {
         if (obj["SignatureVersion"] == "1") {
             if (type == "Notification") {
                 console.log("Notification:" + obj["Message"]);
-                console.log("sentiment:" + cont["sentiment"])
+                console.log("sentiment:" + cont["sentiment"]);
                 client.index({
                     index: 'twitter',
                     type: 'people with sentiment',
                     body: {
                         content: cont
                     }
-                })
+                }, function(err, data) {
+                    console.log('json reply received' + data);
+                });
             } else if (type == "SubscriptionConfirmation") {
 
                 Token = obj["Token"];
